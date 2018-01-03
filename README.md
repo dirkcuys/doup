@@ -10,7 +10,8 @@ Example:
 
 
 # TODO
- [ ] Figure out better way of handing passwords
- [ ] create droplet - http://docs.ansible.com/ansible/digital_ocean_module.html
- [ ] store recorded facts?
- [ ] Add accepted public key root is using to user account
+
+- [ ] Figure out better way of handing passwords
+- [ ] create droplet - http://docs.ansible.com/ansible/digital_ocean_module.html
+- [ ] store recorded facts?
+- [ ] Add accepted public key root is using to user account
