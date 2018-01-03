@@ -1,0 +1,14 @@
+- name: setup python #TODO only do this for Ubuntu 16.04
+  hosts: all
+  become: yes
+  become_method: sudo
+  gather_facts: False
+  tasks:
+  - name: install python 2
+    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+
+- name: digital ocean initial setup
+  hosts: all
+  become: no
+  roles:
+  - setup

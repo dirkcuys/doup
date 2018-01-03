@@ -1,0 +1,32 @@
+---
+- name: create user
+  user:
+    name: "{{ USER }}"
+    shell: /bin/bash
+    groups: sudo
+    append: yes
+    password: "{{ PASSWORD | password_hash('sha512') }}"
+    update_password: on_create
+
+- name: copy ssh key for user
+  authorized_key:
+    user: "{{ USER }}"
+    state: present
+    key: "{{ item }}"
+  with_file:
+    - files/id_rsa_consulting.pub
+
+- name: set ufw rules to allow ssh
+  ufw:
+    rule: allow
+    port: 22
+
+- name: enable UFW
+  ufw: state=enabled policy=deny
+
+- name: disable root ssh login
+  command: sed -i 's/PermitRootLogin yes/PermitRootLogin no/g' /etc/ssh/sshd_config
+
+# TODO failed on a 14.04 host
+- name: restart OpenSSH service
+  service: state=restarted name=sshd
